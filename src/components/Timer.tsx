@@ -1,7 +1,13 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 
-function Timer({ isTimerRunning, setBackgroundColor, resetTimer  }) {
+interface TimerProps {
+  isTimerRunning: boolean;
+  setBackgroundColor: (colorUpdater: (prevColor: string) => string) => void;
+  resetTimer: boolean;
+}
+
+function Timer({ isTimerRunning, setBackgroundColor, resetTimer }: TimerProps) {
   const [seconds, setSeconds] = useState(0);
 
   useEffect(() => {
@@ -17,8 +23,8 @@ function Timer({ isTimerRunning, setBackgroundColor, resetTimer  }) {
           setSeconds(seconds + 1);
         }
         else {
-            setBackgroundColor((prevColor: string) => prevColor === 'green' ? 'red' : 'green');
-            setSeconds(0)
+          setBackgroundColor((prevColor: string) => prevColor === 'green' ? 'red' : 'green');
+          setSeconds(0)
         }
       }, 1000);
 

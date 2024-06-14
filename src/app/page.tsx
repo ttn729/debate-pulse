@@ -8,7 +8,7 @@ import { Button, Grid } from "@mui/material";
 export default function Home() {
 
   const [isTimerRunning, setIsTimerRunning] = useState(false);
-  const [backgroundColor, setBackgroundColor] = useState(null);
+  const [backgroundColor, setBackgroundColor] = useState('');
   const [isStopped, setIsStopped] = useState(true);
   const [resetTimer, setResetTimer] = useState(false);
 
