@@ -1,4 +1,5 @@
 "use client"
+import { Box, Typography } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 
 interface TimerProps {
@@ -10,6 +11,12 @@ interface TimerProps {
 function Timer({ isTimerRunning, setBackgroundColor, resetTimer }: TimerProps) {
   const [seconds, setSeconds] = useState(0);
 
+  const formattedTime = () => {
+    const minutes = Math.floor(seconds / 60).toString().padStart(2, '0');
+    const secs = (seconds % 60).toString().padStart(2, '0');
+    return `${minutes}:${secs}`;
+  };
+
   useEffect(() => {
     if (resetTimer) {
       setSeconds(0);
@@ -19,7 +26,7 @@ function Timer({ isTimerRunning, setBackgroundColor, resetTimer }: TimerProps) {
   useEffect(() => {
     if (isTimerRunning) {
       const interval = setInterval(() => {
-        if (seconds < 60) {
+        if (seconds < 5) {
           setSeconds(seconds + 1);
         }
         else {
@@ -30,12 +37,16 @@ function Timer({ isTimerRunning, setBackgroundColor, resetTimer }: TimerProps) {
 
       return () => clearInterval(interval);
     }
-  }, [isTimerRunning, seconds]);
+  }, [isTimerRunning, seconds, setBackgroundColor]);
 
   return (
-    <div>
-      <h1>Timer: {seconds}</h1>
-    </div>
+    <Box       
+    sx={{
+      border: '1px solid #000'
+      }}>
+        <Typography variant='h1' align='center'>      {formattedTime()}
+        </Typography>
+    </Box>
   );
 }
 

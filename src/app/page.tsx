@@ -1,17 +1,20 @@
 "use client"
-import Image from "next/image";
 import styles from "./page.module.css";
 import Timer from "@/components/Timer";
 import { useState } from "react";
-import { Button, Grid } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
+import Item from "@/components/Item";
+import TopicModal from "@/components/TopicModal";
+import Interrupt from "@/components/Interrupt";
+import Ignore from "@/components/Ignore";
 
 export default function Home() {
-
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [backgroundColor, setBackgroundColor] = useState('');
   const [isStopped, setIsStopped] = useState(true);
   const [resetTimer, setResetTimer] = useState(false);
-
+  const [topicName, setTopicName] = useState('');
+  const [numTeams, setNumTeams] = useState('');
 
   const handleReset = () => {
     setResetTimer(true);
@@ -20,37 +23,90 @@ export default function Home() {
     }, 100);
   };
 
+  const [openModal, setOpenModal] = useState(false);
+
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+
+  const renderTeams = () => {
+    const teams = [];
+    for (let i = 1; i <= Number(numTeams) && i <= 4; i++) {
+      teams.push(
+        <Box key={i} sx={{ p: 1, bgcolor: 'primary.main', color: 'primary.contrastText', marginRight: 1 }}>
+          <Typography variant="body1">Team #{i}</Typography>
+        </Box>
+      );
+    }
+    return teams;
+  };
+
   return (
     <main className={`${styles.main} ${isStopped ? '' : backgroundColor === 'green' ? styles.greenBackground : styles.redBackground}`}>
 
       <div className={styles.description}>
-        <div>
-          By Spicy
-        </div>
+        <Box sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          p: 1,
+          m: 1,
+          borderRadius: 1,
+          width: '100%',
+        }}>
+          <Item>
+            Spicy Language Timer
+          </Item>
+          <Item>
+            Join
+          </Item>
+          <Item onClick={handleOpenModal}>
+            Create a topic
+          </Item>
+          <TopicModal open={openModal} onClose={handleCloseModal} setTopicName={setTopicName} setNumTeams={setNumTeams} />
+
+        </Box>
       </div>
 
-      <div className={styles.center}>
+      <Grid container flexDirection="row">
+
+        <Grid container item xs={3} justifyContent="center" alignItems="center">
+          <Interrupt />
+        </Grid>
+
         <Grid
-          container
-          justifyContent="center"
-          alignItems="center"
+          item
+          xs={6}
+          width="100%"
+
         >
-          <Grid item xs={12}>
+          <Grid container item xs={12} justifyContent="center" alignItems="center" width='100%' flexDirection='column'>
+            <Typography variant="h3" align="center">{topicName}</Typography>
             <Timer isTimerRunning={isTimerRunning} setBackgroundColor={setBackgroundColor} resetTimer={resetTimer} />
           </Grid>
 
-          <Grid item xs={12}>
-            <Button variant="contained" onClick={() => { setIsTimerRunning(true); setIsStopped(false) }}>Start!</Button>
-            <Button variant="contained" onClick={() => { setIsTimerRunning(false); setIsStopped(true); handleReset() }}>Stop!</Button>
-            <Button variant="contained" onClick={() => setIsTimerRunning(false)}>Pause!</Button>
+          <Grid container item xs={12} justifyContent="center" alignItems="center" width='100%'>
+              <Button variant="contained" onClick={() => { setIsTimerRunning(true); setIsStopped(false) }}>Start!</Button>
+              <Button variant="contained" onClick={() => setIsTimerRunning(false)}>Pause!</Button>
+              <Button variant="contained" onClick={() => { setIsTimerRunning(false); setIsStopped(true); handleReset() }}>Stop!</Button>
           </Grid>
 
         </Grid>
 
-      </div>
+        <Grid container item xs={3} justifyContent="center" alignItems="center">
+          <Ignore />
+        </Grid>
+
+
+      </Grid>
+
+
 
       <div className={styles.grid}>
-
+        {renderTeams()}
       </div>
     </main>
   );
