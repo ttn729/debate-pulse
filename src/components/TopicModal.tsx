@@ -7,11 +7,13 @@ interface TopicModalProps {
     onClose: () => void;
     setNumTeams: (numTeams: string) => void;
     setTopicName: (topicName: string) => void;
+    setNumSeconds: (numSeconds: string) => void;
 }
 
-const TopicModal = ({ open, onClose, setNumTeams, setTopicName }: TopicModalProps) => {
+const TopicModal = ({ open, onClose, setNumTeams, setTopicName, setNumSeconds }: TopicModalProps) => {
     const [topicNameInput, setTopicNameInput] = useState<string>('');
     const [numTeamsInput, setNumTeamsInput] = useState<string>('');
+    const [timeInput, setTimeInput] = useState<string>('');
 
     const handleClose = () => {
         onClose();
@@ -20,7 +22,7 @@ const TopicModal = ({ open, onClose, setNumTeams, setTopicName }: TopicModalProp
     const handleSave = () => {
         setNumTeams(numTeamsInput);
         setTopicName(topicNameInput);
-        console.log('clicked save')
+        setNumSeconds(timeInput)
         handleClose();
     };
 
@@ -47,16 +49,23 @@ const TopicModal = ({ open, onClose, setNumTeams, setTopicName }: TopicModalProp
                     label="Topic Name"
                     value={topicNameInput}
                     onChange={(e) => setTopicNameInput(e.target.value)}
-                    sx={{ mt: 2 }}
+                    sx={{ mt: 2, mb: 2}}
                 />
                 <TextField
                     fullWidth
-                    type="number"
+                    label="Time (seconds)"
+                    value={timeInput}
+                    onChange={(e) => setTimeInput(e.target.value)}
+                    sx={{ mb: 2}}
+                />
+                {/* <TextField
+                    fullWidth
+                    type="number" 
                     label="Number of Teams"
                     value={numTeamsInput}
                     onChange={(e) => setNumTeamsInput(e.target.value)}
                     sx={{ mb: 2 }}
-                />
+                /> */}
                 <Button onClick={handleSave} variant="contained" sx={{ mr: 2 }}>Save</Button>
                 <Button onClick={handleClose} variant="outlined">Cancel</Button>
             </Box>

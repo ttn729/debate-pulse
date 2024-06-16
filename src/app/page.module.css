@@ -8,11 +8,13 @@
 }
 
 .greenBackground {
-  background-color: green;
+  background: rgb(142,250,151);
+  background: radial-gradient(circle, rgba(142,250,151,1) 0%, rgba(43,133,31,1) 100%);
 }
 
 .redBackground {
-  background-color: red;
+  background: rgb(255,194,231);
+  background: radial-gradient(circle, rgba(255,194,231,1) 0%, rgba(249,7,22,1) 100%);
 }
 
 .description {

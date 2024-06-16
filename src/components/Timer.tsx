@@ -6,9 +6,10 @@ interface TimerProps {
   isTimerRunning: boolean;
   setBackgroundColor: (colorUpdater: (prevColor: string) => string) => void;
   resetTimer: boolean;
+  numSeconds: string;
 }
 
-function Timer({ isTimerRunning, setBackgroundColor, resetTimer }: TimerProps) {
+function Timer({ isTimerRunning, setBackgroundColor, resetTimer, numSeconds }: TimerProps) {
   const [seconds, setSeconds] = useState(0);
 
   const formattedTime = () => {
@@ -26,7 +27,7 @@ function Timer({ isTimerRunning, setBackgroundColor, resetTimer }: TimerProps) {
   useEffect(() => {
     if (isTimerRunning) {
       const interval = setInterval(() => {
-        if (seconds < 5) {
+        if (seconds < Number(numSeconds)) {
           setSeconds(seconds + 1);
         }
         else {
@@ -37,12 +38,14 @@ function Timer({ isTimerRunning, setBackgroundColor, resetTimer }: TimerProps) {
 
       return () => clearInterval(interval);
     }
-  }, [isTimerRunning, seconds, setBackgroundColor]);
+  }, [isTimerRunning, numSeconds, seconds, setBackgroundColor]);
 
   return (
     <Box       
     sx={{
-      border: '1px solid #000'
+      border: '3px solid #000',
+      mt: 2,
+      padding: '0 3em 0 3em'
       }}>
         <Typography variant='h1' align='center'>      {formattedTime()}
         </Typography>
