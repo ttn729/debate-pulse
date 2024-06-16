@@ -7,8 +7,6 @@ import Item from "@/components/Item";
 import TopicModal from "@/components/TopicModal";
 
 
-const timerSound = require('../../public/timerSound.mp3');
-
 export default function Home() {
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [backgroundColor, setBackgroundColor] = useState('');
