@@ -20,6 +20,8 @@ export default function Home() {
   const [topicName, setTopicName] = useState('');
   const [numTeams, setNumTeams] = useState('');
   const [numSeconds, setNumSeconds] = useState('');
+  const [clickedStart, setClickedStart] = useState(false);
+
 
 
   const handleReset = () => {
@@ -96,14 +98,18 @@ export default function Home() {
           </Grid>
 
           <Grid container item xs={12} justifyContent="center" alignItems="center" width='100%' spacing={2}>
+            {
+              !clickedStart &&
       <Grid item>
-        <Button variant="contained" onClick={() => { setIsTimerRunning(true); setIsStopped(false) }}>Start!</Button>
+      <Button variant="contained" onClick={() => { setIsTimerRunning(true); setIsStopped(false); setClickedStart(true) }}>Start!</Button>
+    </Grid>
+            }
+
+      <Grid item>
+        <Button variant="contained" onClick={() => setIsTimerRunning(!isTimerRunning)}>{isTimerRunning || !clickedStart ? 'Pause!' : 'Resume!'}</Button>
       </Grid>
       <Grid item>
-        <Button variant="contained" onClick={() => setIsTimerRunning(false)}>Pause!</Button>
-      </Grid>
-      <Grid item>
-        <Button variant="contained" onClick={() => { setIsTimerRunning(false); setIsStopped(true); handleReset() }}>Stop!</Button>
+        <Button variant="contained" onClick={() => { setIsTimerRunning(false); setIsStopped(true); handleReset(); setClickedStart(false) }}>Stop!</Button>
       </Grid>
 
     </Grid>
