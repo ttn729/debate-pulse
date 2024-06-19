@@ -22,9 +22,9 @@ function Timer({ isTimerRunning, setBackgroundColor, resetTimer, numSeconds }: T
 
   useEffect(() => {
     if (resetTimer) {
-      setSeconds(0);
+      setSeconds(Number(numSeconds));
     }
-  }, [resetTimer]);
+  }, [resetTimer, numSeconds]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -38,19 +38,19 @@ function Timer({ isTimerRunning, setBackgroundColor, resetTimer, numSeconds }: T
   useEffect(() => {
     if (isTimerRunning) {
       const interval = setInterval(() => {
-        if (seconds < Number(numSeconds)) {
-          setSeconds(seconds + 1);
+        if (seconds > 0) {
+          setSeconds(seconds - 1);
           // Check if there are 5 seconds left
-          if (Number(numSeconds) - seconds === 5 && tickSound) {
+          if (seconds === 5 && tickSound) {
               tickSound.play(); // Play the sound when 5 seconds are left
           }
-          if (Number(numSeconds) - seconds === 1 && microwaveTimer) {
+          if (seconds === 1 && microwaveTimer) {
             microwaveTimer.play();
         }
         }
         else {
           setBackgroundColor((prevColor) => prevColor === 'green' ? 'red' : 'green');
-          setSeconds(0);
+          setSeconds(Number(numSeconds));
           if (tickSound) {
             tickSound.pause();
           }
