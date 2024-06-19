@@ -5,6 +5,11 @@ import { useState } from "react";
 import { Box, Button, Grid, Typography } from "@mui/material";
 import Item from "@/components/Item";
 import TopicModal from "@/components/TopicModal";
+import { Open_Sans} from 'next/font/google';
+
+
+// const topicFont = Fira_Mono({weight: '700', subsets: ["latin"]});
+const topicFont = Open_Sans({weight: '800', subsets: ["latin"]});
 
 
 export default function Home() {
@@ -64,9 +69,11 @@ export default function Home() {
           {/* <Item>
             Join
           </Item> */}
-          <Item onClick={handleOpenModal}>
+
+          <Button onClick={handleOpenModal} variant="contained">
             Create a topic
-          </Item>
+          </Button>
+
           <TopicModal open={openModal} onClose={handleCloseModal} setTopicName={setTopicName} setNumTeams={setNumTeams} setNumSeconds={setNumSeconds}/>
 
         </Box>
@@ -82,10 +89,9 @@ export default function Home() {
           item
           xs={6}
           width="100%"
-
         >
           <Grid container item xs={12} justifyContent="center" alignItems="center" width='100%' flexDirection='column' sx={{mb: 2}}>
-            <Typography variant="h3" align="center">{topicName}</Typography>
+            <Typography variant="h3" align="center" fontFamily={"Fira Mono"} className={topicFont.className}>{topicName}</Typography>
             <Timer isTimerRunning={isTimerRunning} setBackgroundColor={setBackgroundColor} resetTimer={resetTimer} numSeconds={numSeconds}/>
           </Grid>
 
