@@ -11,6 +11,8 @@ interface TimerProps {
 
 function Timer({ isTimerRunning, setBackgroundColor, resetTimer, numSeconds }: TimerProps) {
   const [seconds, setSeconds] = useState(0);
+  const [tickSound, setTickSound] = useState<HTMLAudioElement | null>(null);
+  const [microwaveTimer, setMicrowaveTimer] = useState<HTMLAudioElement | null>(null);
 
   const formattedTime = () => {
     const minutes = Math.floor(seconds / 60).toString().padStart(2, '0');
@@ -24,13 +26,14 @@ function Timer({ isTimerRunning, setBackgroundColor, resetTimer, numSeconds }: T
     }
   }, [resetTimer]);
 
-  let tickSound: HTMLAudioElement
-  let microwaveTimer: HTMLAudioElement
-
-  if (typeof window !== "undefined") {
-    tickSound = document.getElementById("tickSound") as HTMLAudioElement;
-    microwaveTimer = document.getElementById("microwaveTimer") as HTMLAudioElement;
-  }
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const tickSoundElement = document.getElementById("tickSound") as HTMLAudioElement;
+      const microwaveTimerElement = document.getElementById("microwaveTimer") as HTMLAudioElement;
+      setTickSound(tickSoundElement);
+      setMicrowaveTimer(microwaveTimerElement);
+    }
+  }, []);
 
   useEffect(() => {
     if (isTimerRunning) {
@@ -38,17 +41,19 @@ function Timer({ isTimerRunning, setBackgroundColor, resetTimer, numSeconds }: T
         if (seconds < Number(numSeconds)) {
           setSeconds(seconds + 1);
           // Check if there are 5 seconds left
-          if (Number(numSeconds) - seconds === 5) {
+          if (Number(numSeconds) - seconds === 5 && tickSound) {
               tickSound.play(); // Play the sound when 5 seconds are left
           }
-          if (Number(numSeconds) - seconds === 1) {
+          if (Number(numSeconds) - seconds === 1 && microwaveTimer) {
             microwaveTimer.play();
         }
         }
         else {
           setBackgroundColor((prevColor) => prevColor === 'green' ? 'red' : 'green');
           setSeconds(0);
-          tickSound.pause();
+          if (tickSound) {
+            tickSound.pause();
+          }
         }
       }, 1000);
 
