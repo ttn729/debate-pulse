@@ -24,9 +24,13 @@ function Timer({ isTimerRunning, setBackgroundColor, resetTimer, numSeconds }: T
     }
   }, [resetTimer]);
 
-  const tickSound = document.getElementById("tickSound") as HTMLAudioElement; 
-  const microwaveTimer = document.getElementById("microwaveTimer") as HTMLAudioElement; 
+  let tickSound: HTMLAudioElement
+  let microwaveTimer: HTMLAudioElement
 
+  if (typeof window !== "undefined") {
+    tickSound = document.getElementById("tickSound") as HTMLAudioElement;
+    microwaveTimer = document.getElementById("microwaveTimer") as HTMLAudioElement;
+  }
 
   useEffect(() => {
     if (isTimerRunning) {
