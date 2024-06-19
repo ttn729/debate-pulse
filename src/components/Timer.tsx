@@ -24,22 +24,33 @@ function Timer({ isTimerRunning, setBackgroundColor, resetTimer, numSeconds }: T
     }
   }, [resetTimer]);
 
+  const tickSound = document.getElementById("tickSound") as HTMLAudioElement; 
+  const microwaveTimer = document.getElementById("microwaveTimer") as HTMLAudioElement; 
+
+
   useEffect(() => {
     if (isTimerRunning) {
       const interval = setInterval(() => {
         if (seconds < Number(numSeconds)) {
           setSeconds(seconds + 1);
+          // Check if there are 5 seconds left
+          if (Number(numSeconds) - seconds === 5) {
+              tickSound.play(); // Play the sound when 5 seconds are left
+          }
+          if (Number(numSeconds) - seconds === 1) {
+            microwaveTimer.play();
+        }
         }
         else {
-          setBackgroundColor((prevColor: string) => prevColor === 'green' ? 'red' : 'green');
-          setSeconds(0)
+          setBackgroundColor((prevColor) => prevColor === 'green' ? 'red' : 'green');
+          setSeconds(0);
+          tickSound.pause();
         }
       }, 1000);
 
       return () => clearInterval(interval);
     }
-  }, [isTimerRunning, numSeconds, seconds, setBackgroundColor]);
-
+  }, [isTimerRunning, numSeconds, seconds, setBackgroundColor, tickSound, microwaveTimer]);
   return (
     <Box       
     sx={{
@@ -49,6 +60,8 @@ function Timer({ isTimerRunning, setBackgroundColor, resetTimer, numSeconds }: T
       }}>
         <Typography variant='h1' align='center'>      {formattedTime()}
         </Typography>
+        <audio id="tickSound" src="/tickClock.mp3" />
+        <audio id="microwaveTimer" src="/microwaveTimer.mp3" />
     </Box>
   );
 }

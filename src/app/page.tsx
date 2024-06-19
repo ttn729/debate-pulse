@@ -99,6 +99,7 @@ export default function Home() {
       <Grid item>
         <Button variant="contained" onClick={() => { setIsTimerRunning(false); setIsStopped(true); handleReset() }}>Stop!</Button>
       </Grid>
+
     </Grid>
 
         </Grid>
@@ -112,6 +113,7 @@ export default function Home() {
 
       <div className={styles.grid}>
         {/* {renderTeams()} */}
+      
       </div>
     </main>
   );
