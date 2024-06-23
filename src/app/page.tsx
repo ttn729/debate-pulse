@@ -6,6 +6,7 @@ import { Box, Button, Grid, Typography } from "@mui/material";
 import Image from "next/image";
 import TopicModal from "@/components/TopicModal";
 import { Open_Sans} from 'next/font/google';
+import Countdown from "@/components/Countdown";
 
 
 // const topicFont = Fira_Mono({weight: '700', subsets: ["latin"]});
@@ -87,7 +88,6 @@ export default function Home() {
       <Grid container flexDirection="row">
 
         <Grid container item xs={3} justifyContent="center" alignItems="center">
-          {/* <Interrupt /> */}
         </Grid>
 
         <Grid
@@ -104,7 +104,11 @@ export default function Home() {
             {
               !clickedStart &&
       <Grid item>
-      <Button variant="contained" onClick={() => { setIsTimerRunning(true); setIsStopped(false); setClickedStart(true) }}>Start!</Button>
+      <Button variant="contained" onClick={() => {   setTimeout(() => {
+    setIsTimerRunning(true);
+    setIsStopped(false);
+ 
+  }, 3000);    setClickedStart(true); }}>Start!</Button>
     </Grid>
             }
 
@@ -120,16 +124,18 @@ export default function Home() {
         </Grid>
 
         <Grid container item xs={3} justifyContent="center" alignItems="center">
-          {/* <Ignore /> */}
         </Grid>
-
-
       </Grid>
 
-      <div className={styles.grid}>
-        {/* {renderTeams()} */}
-      
-      </div>
+{clickedStart &&
+        <Countdown />
+}
+
+        <div className={styles.grid}>
+
+          </div>
+
+
     </main>
   );
 }
