@@ -3,7 +3,7 @@ import styles from "./page.module.css";
 import Timer from "@/components/Timer";
 import { useState } from "react";
 import { Box, Button, Grid, Typography } from "@mui/material";
-import Item from "@/components/Item";
+import Image from "next/image";
 import TopicModal from "@/components/TopicModal";
 import { Open_Sans} from 'next/font/google';
 
@@ -64,13 +64,16 @@ export default function Home() {
           m: 1,
           borderRadius: 1,
           width: '100%',
+          alignItems: 'center'
         }}>
-          <Item>
-            Spicy Language Timer
-          </Item>
-          {/* <Item>
-            Join
-          </Item> */}
+        <Image
+          className={styles.logo}
+          src="/debatePulse.svg"
+          alt="Debate Pulse Logo"
+          priority
+          width={120}
+          height={120}
+        />
 
           <Button onClick={handleOpenModal} variant="contained">
             Create a topic
